@@ -3,12 +3,10 @@
  */
 
 //milkcocoa公式のアプリ名
-//var mk = new MilkCocoa('dogi9jz8c16.mlkcca.com');
-//MyDotのアプリ名
-var mk = new MilkCocoa("readicr2c0wj.mlkcca.com");
+var mk = new MilkCocoa('dogi9jz8c16.mlkcca.com');
 var ds = mk.dataStore('dots');
 
-/* パレットの現在選択中の色 */
+/* パレットの現在選択中の色(最初はとりあえず黒入れておく) */
 var currentColor = "#000";
 
 /* canvasに描画されるドットの集合体 */
