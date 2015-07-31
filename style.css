@@ -1,0 +1,127 @@
+main {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.dot_control_plus {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border-right: 1px solid #efefef;
+    cursor: pointer;
+}
+
+.dot_control_minus {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.dot_control_txt {
+    font-size: 10px;
+}
+
+.dot_control_wrap.no-padding {
+    padding: 0;
+    vertical-align: top;
+    margin-top: -5px;
+}
+
+.dot_control_item {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: top;
+    border-radius: 3px;
+}
+
+.dot_control_color {
+    cursor: pointer;
+}
+
+.dot_control_item.dot_control_current {
+    border: 1px solid rgb(164, 5, 21);
+    background-color: rgb(206, 7, 27);
+}
+
+.dot_control_item.dot_control_black {
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(1, 1, 1);
+}
+
+.dot_control_item.dot_control_blue {
+    border: 1px solid rgb(53, 111, 160);
+    background-color: rgb(67, 139, 200);
+}
+
+.dot_control_item.dot_control_brown {
+    border: 1px solid rgb(73, 21, 5);
+    background-color: rgb(92, 27, 7);
+}
+
+.dot_control_item.dot_control_current {
+    background-color: rgb(206, 7, 27);
+}
+
+.dot_control_item.dot_control_green {
+    border: 1px solid rgb(7, 98, 32);
+    background-color: rgb(9, 123, 40);
+}
+
+.dot_control_item.dot_control_navy {
+    border: 1px solid rgb(12, 72, 132);
+    background-color: rgb(15, 90, 166);
+}
+
+.dot_control_item.dot_control_orange {
+    border: 1px solid rgb(176, 78, 4);
+    background-color: rgb(220, 98, 6);
+}
+
+.dot_control_item.dot_control_purple {
+    border: 1px solid rgb(134, 7, 93);
+    background-color: rgb(168, 9, 117);
+}
+
+.dot_control_item.dot_control_red {
+    border: 1px solid rgb(164, 5, 21);
+    background-color: rgb(206, 7, 27);
+}
+
+.dot_control_item.dot_control_sand {
+    border: 1px solid rgb(176, 153, 99);
+    background-color: rgb(221, 192, 124);
+}
+
+.dot_control_item.dot_control_white {
+    border: 1px solid rgb(204, 204, 204);
+    background-color: rgb(255, 255, 255);
+}
+
+.dot_control_item.dot_control_yellow {
+    border: 1px solid rgb(202, 150, 0);
+    background-color: rgb(253, 188, 0);
+}
+
+.pallet {
+    display: block;
+}
+
+.pallet_wrap {
+    padding: 7px;
+    /*background: radial-gradient(ellipse farthest-side at 130% 130%, #71c6bf 10%, #224d6a 120%);
+    */
+}
+
+.dot_control_wrap {
+    display: inline-block;
+    background-color: #f6f6f6;
+    padding: 7px;
+    border-radius: 3px;
+    margin-right: 6px;
+    margin-bottom: 8px;
+}

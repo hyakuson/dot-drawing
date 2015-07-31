@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+    <title>Dot!</title>
+</head>
+
+<body>
+    <header>
+        <h1>Dot!</h1>
+        <h2>About</h2>
+        <div>このWebサイトはMilkcocoaでのドットお絵かきをより楽しくするためのツールを提供するついでに、p5.jsとBaaSのmilkcocoaを連携させる実験のようなことをやっています。
+        </div>
+        <ul>
+            <li><a href="https://mlkcca.com/" target="_blank">Go to Milkcocoa</a>
+            </li>
+            <li><a href="https://mlkcca.com/document/" target="_blank">Document(Milkcocoa)</a>
+            </li>
+        </ul>
+    </header>
+    <main>
+        <div class="pallet_wrap">
+            <!-- カラーパレット-->
+            <div class="pallet">
+                <div class="dot_control_wrap">
+                    <div id="dot_current" class="dot_control_item dot_control_current"></div>
+                </div>
+                <div class="dot_control_wrap">
+                    <div class="dot_control_item dot_control_color dot_control_red"></div>
+                    <div class="dot_control_item dot_control_color dot_control_orange"></div>
+                    <div class="dot_control_item dot_control_color dot_control_yellow"></div>
+                    <div class="dot_control_item dot_control_color dot_control_green"></div>
+                    <div class="dot_control_item dot_control_color dot_control_blue"></div>
+                    <div class="dot_control_item dot_control_color dot_control_navy"></div>
+                    <div class="dot_control_item dot_control_color dot_control_purple"></div>
+                    <div class="dot_control_item dot_control_color dot_control_sand"></div>
+                    <div class="dot_control_item dot_control_color dot_control_brown"></div>
+                    <div class="dot_control_item dot_control_color dot_control_black"></div>
+                    <div class="dot_control_item dot_control_color dot_control_white"></div>
+                </div>
+                <div class="dot_control_wrap no-padding">
+                    <span class="dot_control_txt">Brightness</span>
+                    <br>
+                    <div id="control_plus" class="dot_control_plus">+</div>
+                    <div id="control_minus" class="dot_control_minus">-</div>
+                </div>
+            </div>
+
+            <div id="canvas_area">
+                <!-- dot.js読み込み時、ここにcanvasが挿入されます -->
+            </div>
+
+            <div id="operations">
+
+            </div>
+
+            <div id="tools">
+                <h2>Tools</h2>
+                <div id="tools-capture">
+                    <span>キャプチャ</span>
+                    <button id="capture_button">capture</button>
+                    <button id="clear_button">clear</button>
+                    <div id="image_area"></div>
+                </div>
+                <div id="tools-eraseall">
+                    <span>全消し(作ってる)</span>
+                    <button id="eraseall_button">erase</button>
+                </div>
+                <div id="tools-resize">
+                    <span>
+                        canvasのリサイズ(作りたい)
+                        <!--canvasをリサイズしたい-->
+                    </span>
+                </div>
+                <div id="tools-autodraw">
+                    <span>
+                    自動お絵かき(作りたい)
+                    <!--静止画でもいいし、できたら動かしたい-->
+                    <!--セルオートマトンとか動かしたい-->
+                    </span>
+                </div>
+                <div id="tools-dotfromimage">
+                    <span>
+                    画像からドット絵作成(作りたい)
+                    <!--画像をアップロードすると画像処理してドット絵にするのやりたい-->
+                    </span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div>
+        <h2>更新履歴</h2>
+        <ul>
+            <li>2015/07/29 milkcocoaトップページへドットが送信されるようになりました！</li>
+            <li>2015/07/29 カラーパレット実装</li>
+        </ul>
+    </div>
+    <footer>This site is building with p5.js and milkcocoa!</footer>
+
+    <script src='https://cdn.mlkcca.com/v2.0.0/milkcocoa.js'></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.7/p5.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="./common_objects.js"></script>
+    <script src="./dot.js"></script>
+    <script>
+
+        $(window).load(function () {
+            //currentColorはdot.js内のグローバル変数で色を共有する
+            currentColor = $('.dot_control_item.dot_control_red').css('background-color');
+            var currentBorderColor = $('.dot_control_item.dot_control_red').css('border');
+
+            $('.dot_control_color').click(function () {
+                //console.log($(this).css('background-color'));
+                currentColor = $(this).css('background-color');
+                currentBorderColor = $(this).css('border');
+                $('#dot_current')
+                    .css('background-color', currentColor)
+                    .css('border', currentBorderColor);
+            });
+
+            $('#control_plus, #control_minus').click(function () {
+                var fillColor = new Color(currentColor);
+                var borderColor = new Color(currentBorderColor);
+
+                if ($(this).attr("id") === "control_plus") {
+                    fillColor.add(10, 10, 10);
+                    borderColor.add(10, 10, 10);
+                } else if ($(this).attr("id") === "control_minus") {
+                    fillColor.add(-10, -10, -10);
+                    borderColor.add(-10, -10, -10);
+                }
+                currentColor = fillColor.getRGB();
+                currentBorderColor = borderColor.getRGB();
+
+                $('#dot_current')
+                    .css('background-color', currentColor)
+                    .css('border', '1px solid' + currentBorderColor);
+            });
+
+            $('#capture_button').click(function () {
+
+                // すでに画像があったら削除
+                $('#copied_image').remove();
+
+                $('<img>')
+                    .attr('src', document.getElementById('defaultCanvas').toDataURL('image/png'))
+                    .attr('id', 'copied_image')
+                    .appendTo($('#image_area'));
+            });
+
+            $('#clear_button').click(function () {
+                $('#copied_image').remove();
+            });
+
+            // 全消しボタン
+            $('#eraseall_button').click(function () {
+                ds.stream().size(100).next(function (err, stream) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    stream.forEach(function (data, index) {
+                        ds.push({
+                            "index": data.value.index,
+                            "color": '#f5f5f5'
+                        },function(err, pushed){
+                            if(err){
+                                console.log(err);
+                                return;
+                            }
+                            //pushが成功してからdotの色は変える
+                            dots[pushed.value.index].changeColor('#f5f5f5');
+                        });
+                    });
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>
