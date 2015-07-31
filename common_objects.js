@@ -86,20 +86,12 @@ Dot.prototype = {
     },
     changeColorWithPush: function (index, color) {
         var hexColor = new Color(color).getHex();
-        console.log(index,hexColor);
+        //console.log(index, hexColor);
+        // push後の色を変える処理はdot.jsのonPushで行われるのでここでは不要
         ds.push({
-                "index": index,
-                "color": hexColor
-            });
-            // push成功後、dotの色を変える
-//            function(err, pushed) {
-//                if (err) {
-//                    console.log(err);
-//                    return;
-//                }
-//                this.changeColor(pushed.value.color);
-//            });
-                this.changeColor(color);
+            "index": index,
+            "color": hexColor
+        });
     },
     isOvered: function (x, y) {
         return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
