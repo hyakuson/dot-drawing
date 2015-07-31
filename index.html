@@ -105,7 +105,6 @@
     <script src="./common_objects.js"></script>
     <script src="./dot.js"></script>
     <script>
-
         $(window).load(function () {
             //currentColorはdot.js内のグローバル変数で色を共有する
             currentColor = $('.dot_control_item.dot_control_red').css('background-color');
@@ -156,23 +155,27 @@
 
             // 全消しボタン
             $('#eraseall_button').click(function () {
-                ds.stream().size(100).next(function (err, stream) {
+                ds.stream().size(200).next(function (err, stream) {
                     if (err) {
                         console.log(err);
                         return;
                     }
                     stream.forEach(function (data, index) {
-                        ds.push({
-                            "index": data.value.index,
-                            "color": '#f5f5f5'
-                        },function(err, pushed){
-                            if(err){
-                                console.log(err);
-                                return;
-                            }
-                            //pushが成功してからdotの色は変える
-                            dots[pushed.value.index].changeColor('#f5f5f5');
-                        });
+                        if (!data) return;
+                        // 背景色と違うときだけpush
+                        if (data.value.color !== '#f5f5f5') {
+                            ds.push({
+                                "index": data.value.index,
+                                "color": '#f5f5f5'
+                            }, function (err, pushed) {
+                                if (err) {
+                                    console.log(err);
+                                    return;
+                                }
+                                //pushが成功してからdotの色は変える
+                                dots[pushed.value.index].changeColor('#f5f5f5');
+                            });
+                        }
                     });
                 });
             });
